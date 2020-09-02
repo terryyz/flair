@@ -9,10 +9,8 @@ from gensim.models import KeyedVectors
 from gensim.scripts.glove2word2vec import glove2word2vec
 
 embedding_types = [
-    [POSEmbeddings(dim=25),],
-    [WordEmbeddings('glove_normal100/normal_embeddings_100d'),],
-    [POSEmbeddings(dim=100),],
-    [WordEmbeddings('glove_normal400/normal_embeddings_400d'),],
+    [WordEmbeddings('glove_spacy100_v2/pos_embeddings_v2_100d'),],
+    [WordEmbeddings('glove_spacy25_v2/pos_embeddings_v2_25d'),]
     ]
 
 for idx, embedding_type in enumerate(embedding_types):
@@ -33,7 +31,7 @@ for idx, embedding_type in enumerate(embedding_types):
 
         trainer: ModelTrainer = ModelTrainer(tagger, corpus)
 
-        trainer.train(f'resources/taggers/ner-tagger-with-pos-embeddings-{idx}-run{idx2}',
+        trainer.train(f'resources/taggers/ner-tagger-with-pos-embeddings-v2-{idx}-run{idx2}',
                       learning_rate=0.1,
                       mini_batch_size=32,
                       max_epochs=150,
