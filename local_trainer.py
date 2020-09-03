@@ -9,8 +9,8 @@ from gensim.models import KeyedVectors
 from gensim.scripts.glove2word2vec import glove2word2vec
 
 embedding_types = [
-    [WordEmbeddings('glove_spacy100_v2/pos_embeddings_v2_100d'),],
-    [WordEmbeddings('glove_spacy25_v2/pos_embeddings_v2_25d'),]
+    [POSEmbeddings(dim=25),],
+    [POSEmbeddings(dim=100),]
     ]
 
 for idx, embedding_type in enumerate(embedding_types):

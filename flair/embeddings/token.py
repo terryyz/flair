@@ -264,7 +264,7 @@ class POSEmbeddings(TokenEmbeddings):
         :param embeddings: one of: 'glove', 'extvec', 'crawl' or two-letter language code or custom
         If you want to use a custom embedding file, just pass the path to the embeddings as embeddings variable.
         """
-        embeddings = f"pos_embeddings_{dim}d"
+        embeddings = f"pos_embeddings_v2_{dim}d"
 
         self.embeddings = embeddings
 
@@ -273,9 +273,9 @@ class POSEmbeddings(TokenEmbeddings):
         cache_dir = Path("embeddings")
 
         # part of speech embeddings
-        cached_path(f"{hu_path}/embeddings/pos/{embeddings}.vectors.npy", cache_dir=cache_dir)
+        cached_path(f"glove_spacy{dim}_v2/{embeddings}.vectors.npy", cache_dir=cache_dir)
         embeddings = cached_path(
-            f"{hu_path}/embeddings/pos/{embeddings}", cache_dir=cache_dir
+            f"glove_spacy{dim}_v2/{embeddings}", cache_dir=cache_dir
         )
 
         self.name: str = str(embeddings)
