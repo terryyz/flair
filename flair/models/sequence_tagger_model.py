@@ -733,15 +733,18 @@ class SequenceTagger(flair.nn.Model):
             tag = torch.tensor(tag_idx, device=flair.device)
             tag_list.append(tag)
 
+        tag_num_list: List[int] = [sum(idx > 1 for idx in tag_item) for tag_item in tag_list]
+        
+        weights: torch.tensor = torch.Tensor([(float(tag_num) / float(length)) for tag_num, length in zip(tag_num_list, lengths)])
+
         if self.use_crf:
             # pad tags if using batch-CRF decoder
             tags, _ = pad_tensors(tag_list)
-
             forward_score = self._forward_alg(features, lengths)
             gold_score = self._score_sentence(features, tags, lengths)
 
-            score = forward_score - gold_score
-
+            #apply the weight = |OV| / |Q|
+            score = (forward_score - gold_score) * weights
             return score.mean()
 
         else:
